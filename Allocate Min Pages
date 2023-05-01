@@ -1,0 +1,45 @@
+class Solution 
+{
+    public:
+    bool ispossible(int A[], int N, int M,int mid){
+        int pagesum =0;
+    int stucnt=1;
+    for(int i=0;i<N;i++){
+        if(pagesum+A[i]<=mid){
+            pagesum+=A[i];
+        }
+        else{
+          stucnt++;
+            if(stucnt>M || A[i] > mid){
+                return false;
+            }
+          pagesum = A[i];
+        }
+    }
+    return true;
+    }
+    //Function to find minimum number of pages.
+    int findPages(int A[], int N, int M) 
+    {
+        int s=0;
+        int e=0;
+        int sum=0;
+        for(int i=0;i<N;i++){
+            sum+=A[i];
+        }if(M>N){
+        return -1;
+    }
+    e=sum;
+    int ans =-1;
+    while(s<=e){
+        int mid=s+(e-s)/2;
+        if(ispossible(A, N, M, mid)){
+            ans = mid;
+            e=mid-1;
+        } else {
+          s = mid + 1;
+        }
+    }
+    return ans;
+    }
+};
